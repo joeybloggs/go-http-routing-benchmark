@@ -32,7 +32,6 @@ import (
 	"github.com/gocraft/web"
 	"github.com/gorilla/mux"
 	"github.com/julienschmidt/httprouter"
-	"github.com/labstack/echo"
 	llog "github.com/lunny/log"
 	"github.com/lunny/tango"
 	vulcan "github.com/mailgun/route"
@@ -88,12 +87,12 @@ func init() {
 	log.SetOutput(new(mockResponseWriter))
 	nullLogger = log.New(new(mockResponseWriter), "", 0)
 
-	initBeego()
-	initGin()
-	initMartini()
-	initRevel()
-	initTango()
-	initTraffic()
+	// initBeego()
+	// initGin()
+	// initMartini()
+	// initRevel()
+	// initTango()
+	// initTraffic()
 }
 
 // Common
@@ -326,65 +325,65 @@ func loadDencoSingle(method, path string, h denco.HandlerFunc) http.Handler {
 	return handler
 }
 
-// Echo
-func echoHandler(c *echo.Context) error {
-	return nil
-}
+// // Echo
+// func echoHandler(c *echo.Context) error {
+// 	return nil
+// }
 
-func echoHandlerWrite(c *echo.Context) error {
-	io.WriteString(c.Response(), c.Param("name"))
-	return nil
-}
+// func echoHandlerWrite(c *echo.Context) error {
+// 	io.WriteString(c.Response(), c.Param("name"))
+// 	return nil
+// }
 
-func echoHandlerTest(c *echo.Context) error {
-	io.WriteString(c.Response(), c.Request().RequestURI)
-	return nil
-}
+// func echoHandlerTest(c *echo.Context) error {
+// 	io.WriteString(c.Response(), c.Request().RequestURI)
+// 	return nil
+// }
 
-func loadEcho(routes []route) http.Handler {
-	var h interface{} = echoHandler
-	if loadTestHandler {
-		h = echoHandlerTest
-	}
+// func loadEcho(routes []route) http.Handler {
+// 	var h interface{} = echoHandler
+// 	if loadTestHandler {
+// 		h = echoHandlerTest
+// 	}
 
-	e := echo.New()
-	for _, r := range routes {
-		switch r.method {
-		case "GET":
-			e.Get(r.path, h)
-		case "POST":
-			e.Post(r.path, h)
-		case "PUT":
-			e.Put(r.path, h)
-		case "PATCH":
-			e.Patch(r.path, h)
-		case "DELETE":
-			e.Delete(r.path, h)
-		default:
-			panic("Unknow HTTP method: " + r.method)
-		}
-	}
-	return e
-}
+// 	e := echo.New()
+// 	for _, r := range routes {
+// 		switch r.method {
+// 		case "GET":
+// 			e.Get(r.path, h)
+// 		case "POST":
+// 			e.Post(r.path, h)
+// 		case "PUT":
+// 			e.Put(r.path, h)
+// 		case "PATCH":
+// 			e.Patch(r.path, h)
+// 		case "DELETE":
+// 			e.Delete(r.path, h)
+// 		default:
+// 			panic("Unknow HTTP method: " + r.method)
+// 		}
+// 	}
+// 	return e
+// }
 
-func loadEchoSingle(method, path string, h interface{}) http.Handler {
-	e := echo.New()
-	switch method {
-	case "GET":
-		e.Get(path, h)
-	case "POST":
-		e.Post(path, h)
-	case "PUT":
-		e.Put(path, h)
-	case "PATCH":
-		e.Patch(path, h)
-	case "DELETE":
-		e.Delete(path, h)
-	default:
-		panic("Unknow HTTP method: " + method)
-	}
-	return e
-}
+// func loadEchoSingle(method, path string, h interface{}) http.Handler {
+// 	e := echo.New()
+// 	switch method {
+// 	case "GET":
+// 		e.Get(path, h)
+// 	case "POST":
+// 		e.Post(path, h)
+// 	case "PUT":
+// 		e.Put(path, h)
+// 	case "PATCH":
+// 		e.Patch(path, h)
+// 	case "DELETE":
+// 		e.Delete(path, h)
+// 	default:
+// 		panic("Unknow HTTP method: " + method)
+// 	}
+// 	return e
+// }
 
 // Gin
 func ginHandle(_ *gin.Context) {}
@@ -825,7 +824,7 @@ func larsNativeHandlerTest(w http.ResponseWriter, r *http.Request) {
 }
 
 func loadLARS(routes []route) http.Handler {
-	var h interface{} = echoHandler
+	var h interface{} = larsHandler
 	if loadTestHandler {
 		h = larsHandlerTest
 	}
@@ -848,7 +847,7 @@ func loadLARS(routes []route) http.Handler {
 			panic("Unknow HTTP method: " + r.method)
 		}
 	}
-	return l
+	return l.Serve()
 }
 
 func loadLARSSingle(method, path string, h interface{}) http.Handler {
@@ -868,7 +867,7 @@ func loadLARSSingle(method, path string, h interface{}) http.Handler {
 	default:
 		panic("Unknow HTTP method: " + method)
 	}
-	return l
+	return l.Serve()
 }
 
 // Macaron

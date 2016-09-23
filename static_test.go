@@ -188,6 +188,7 @@ var (
 	// staticHttpTreeMux http.Handler
 	// staticKocha       http.Handler
 	staticLARS http.Handler
+	staticPure http.Handler
 	// staticMacaron     http.Handler
 	// staticMartini     http.Handler
 	// staticPat         http.Handler
@@ -260,6 +261,9 @@ func init() {
 	// })
 	calcMem("LARS", func() {
 		staticLARS = loadLARS(staticRoutes)
+	})
+	calcMem("LARS", func() {
+		staticPure = loadPure(staticRoutes)
 	})
 	// calcMem("Macaron", func() {
 	// 	staticMacaron = loadMacaron(staticRoutes)
@@ -353,6 +357,10 @@ func init() {
 // }
 func BenchmarkLARS_StaticAll(b *testing.B) {
 	benchRoutes(b, staticLARS, staticRoutes)
+}
+
+func BenchmarkPure_StaticAll(b *testing.B) {
+	benchRoutes(b, staticPure, staticRoutes)
 }
 
 // func BenchmarkMacaron_StaticAll(b *testing.B) {

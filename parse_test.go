@@ -72,6 +72,7 @@ var (
 	// parseHttpTreeMux http.Handler
 	// parseKocha       http.Handler
 	parseLARS http.Handler
+	parsePure http.Handler
 	// parseMacaron     http.Handler
 	// parseMartini     http.Handler
 	// parsePat         http.Handler
@@ -136,6 +137,9 @@ func init() {
 	// })
 	calcMem("LARS", func() {
 		parseLARS = loadLARS(parseAPI)
+	})
+	calcMem("Pure", func() {
+		parsePure = loadPure(parseAPI)
 	})
 	// calcMem("Macaron", func() {
 	// 	parseMacaron = loadMacaron(parseAPI)
@@ -241,6 +245,11 @@ func init() {
 func BenchmarkLARS_ParseStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/1/users", nil)
 	benchRequest(b, parseLARS, req)
+}
+
+func BenchmarkPure_ParseStatic(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/1/users", nil)
+	benchRequest(b, parsePure, req)
 }
 
 // func BenchmarkMacaron_ParseStatic(b *testing.B) {
@@ -359,6 +368,11 @@ func BenchmarkLARS_ParseParam(b *testing.B) {
 	benchRequest(b, parseLARS, req)
 }
 
+func BenchmarkPure_ParseParam(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/1/classes/go", nil)
+	benchRequest(b, parsePure, req)
+}
+
 // func BenchmarkMacaron_ParseParam(b *testing.B) {
 // 	req, _ := http.NewRequest("GET", "/1/classes/go", nil)
 // 	benchRequest(b, parseMacaron, req)
@@ -475,6 +489,11 @@ func BenchmarkLARS_Parse2Params(b *testing.B) {
 	benchRequest(b, parseLARS, req)
 }
 
+func BenchmarkPure_Parse2Params(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/1/classes/go/123456789", nil)
+	benchRequest(b, parsePure, req)
+}
+
 // func BenchmarkMacaron_Parse2Params(b *testing.B) {
 // 	req, _ := http.NewRequest("GET", "/1/classes/go/123456789", nil)
 // 	benchRequest(b, parseMacaron, req)
@@ -573,6 +592,10 @@ func BenchmarkLARS_Parse2Params(b *testing.B) {
 // }
 func BenchmarkLARS_ParseAll(b *testing.B) {
 	benchRoutes(b, parseLARS, parseAPI)
+}
+
+func BenchmarkPure_ParseAll(b *testing.B) {
+	benchRoutes(b, parsePure, parseAPI)
 }
 
 // func BenchmarkMacaron_ParseAll(b *testing.B) {

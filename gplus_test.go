@@ -52,6 +52,7 @@ var (
 	// gplusHttpTreeMux http.Handler
 	// gplusKocha       http.Handler
 	gplusLARS http.Handler
+	gplusPure http.Handler
 	// gplusMacaron     http.Handler
 	// gplusMartini     http.Handler
 	// gplusPat         http.Handler
@@ -116,6 +117,9 @@ func init() {
 	// })
 	calcMem("LARS", func() {
 		gplusLARS = loadLARS(gplusAPI)
+	})
+	calcMem("Pure", func() {
+		gplusPure = loadPure(gplusAPI)
 	})
 	// calcMem("Macaron", func() {
 	// 	gplusMacaron = loadMacaron(gplusAPI)
@@ -221,6 +225,11 @@ func init() {
 func BenchmarkLARS_GPlusStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people", nil)
 	benchRequest(b, gplusLARS, req)
+}
+
+func BenchmarkPure_GPlusStatic(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/people", nil)
+	benchRequest(b, gplusPure, req)
 }
 
 // func BenchmarkMacaron_GPlusStatic(b *testing.B) {
@@ -339,6 +348,11 @@ func BenchmarkLARS_GPlusParam(b *testing.B) {
 	benchRequest(b, gplusLARS, req)
 }
 
+func BenchmarkPure_GPlusParam(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/people/118051310819094153327", nil)
+	benchRequest(b, gplusPure, req)
+}
+
 // func BenchmarkMacaron_GPlusParam(b *testing.B) {
 // 	req, _ := http.NewRequest("GET", "/people/118051310819094153327", nil)
 // 	benchRequest(b, gplusMacaron, req)
@@ -455,6 +469,11 @@ func BenchmarkLARS_GPlus2Params(b *testing.B) {
 	benchRequest(b, gplusLARS, req)
 }
 
+func BenchmarkPure_GPlus2Params(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/people/118051310819094153327/activities/123456789", nil)
+	benchRequest(b, gplusPure, req)
+}
+
 // func BenchmarkMacaron_GPlus2Params(b *testing.B) {
 // 	req, _ := http.NewRequest("GET", "/people/118051310819094153327/activities/123456789", nil)
 // 	benchRequest(b, gplusMacaron, req)
@@ -553,6 +572,10 @@ func BenchmarkLARS_GPlus2Params(b *testing.B) {
 // }
 func BenchmarkLARS_GPlusAll(b *testing.B) {
 	benchRoutes(b, gplusLARS, gplusAPI)
+}
+
+func BenchmarkPure_GPlusAll(b *testing.B) {
+	benchRoutes(b, gplusPure, gplusAPI)
 }
 
 // func BenchmarkMacaron_GPlusAll(b *testing.B) {

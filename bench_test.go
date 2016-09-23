@@ -197,6 +197,13 @@ func BenchmarkLARS_Param(b *testing.B) {
 	benchRequest(b, router, r)
 }
 
+func BenchmarkPure_Param(b *testing.B) {
+	router := loadPureSingle("GET", "/user/:name", pureHandler)
+
+	r, _ := http.NewRequest("GET", "/user/gordon", nil)
+	benchRequest(b, router, r)
+}
+
 // func BenchmarkMacaron_Param(b *testing.B) {
 // 	router := loadMacaronSingle("GET", "/user/:name", macaronHandler)
 
@@ -374,6 +381,13 @@ const fiveRoute = "/test/test/test/test/test"
 // }
 func BenchmarkLARS_Param5(b *testing.B) {
 	router := loadLARSSingle("GET", fiveColon, larsHandler)
+
+	r, _ := http.NewRequest("GET", fiveRoute, nil)
+	benchRequest(b, router, r)
+}
+
+func BenchmarkPure_Param5(b *testing.B) {
+	router := loadPureSingle("GET", fiveColon, pureHandler)
 
 	r, _ := http.NewRequest("GET", fiveRoute, nil)
 	benchRequest(b, router, r)
@@ -560,6 +574,13 @@ func BenchmarkLARS_Param20(b *testing.B) {
 	benchRequest(b, router, r)
 }
 
+func BenchmarkPure_Param20(b *testing.B) {
+	router := loadPureSingle("GET", twentyColon, pureHandler)
+
+	r, _ := http.NewRequest("GET", twentyRoute, nil)
+	benchRequest(b, router, r)
+}
+
 // func BenchmarkMacaron_Param20(b *testing.B) {
 // 	router := loadMacaronSingle("GET", twentyColon, macaronHandler)
 
@@ -732,6 +753,13 @@ func BenchmarkLARS_Param20(b *testing.B) {
 // }
 func BenchmarkLARS_ParamWrite(b *testing.B) {
 	router := loadLARSSingle("GET", "/user/:name", larsHandlerWrite)
+
+	r, _ := http.NewRequest("GET", "/user/gordon", nil)
+	benchRequest(b, router, r)
+}
+
+func BenchmarkPure_ParamWrite(b *testing.B) {
+	router := loadPureSingle("GET", "/user/:name", pureHandlerWrite)
 
 	r, _ := http.NewRequest("GET", "/user/gordon", nil)
 	benchRequest(b, router, r)

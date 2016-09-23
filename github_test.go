@@ -290,6 +290,7 @@ var (
 	// githubHttpTreeMux http.Handler
 	// githubKocha       http.Handler
 	githubLARS http.Handler
+	githubPure http.Handler
 	// githubMacaron     http.Handler
 	// githubMartini     http.Handler
 	// githubPat         http.Handler
@@ -354,6 +355,9 @@ func init() {
 	// })
 	calcMem("LARS", func() {
 		githubLARS = loadLARS(githubAPI)
+	})
+	calcMem("Pure", func() {
+		githubPure = loadPure(githubAPI)
 	})
 	// calcMem("Macaron", func() {
 	// 	githubMacaron = loadMacaron(githubAPI)
@@ -459,6 +463,11 @@ func init() {
 func BenchmarkLARS_GithubStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/user/repos", nil)
 	benchRequest(b, githubLARS, req)
+}
+
+func BenchmarkPure_GithubStatic(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/user/repos", nil)
+	benchRequest(b, githubPure, req)
 }
 
 // func BenchmarkMacaron_GithubStatic(b *testing.B) {
@@ -675,6 +684,10 @@ func BenchmarkLARS_GithubParam(b *testing.B) {
 // }
 func BenchmarkLARS_GithubAll(b *testing.B) {
 	benchRoutes(b, githubLARS, githubAPI)
+}
+
+func BenchmarkPure_GithubAll(b *testing.B) {
+	benchRoutes(b, githubPure, githubAPI)
 }
 
 // func BenchmarkMacaron_GithubAll(b *testing.B) {

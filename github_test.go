@@ -586,6 +586,11 @@ func BenchmarkLARS_GithubParam(b *testing.B) {
 	benchRequest(b, githubLARS, req)
 }
 
+func BenchmarkPure_GithubParam(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/repos/julienschmidt/httprouter/stargazers", nil)
+	benchRequest(b, githubPure, req)
+}
+
 // func BenchmarkMacaron_GithubParam(b *testing.B) {
 // 	req, _ := http.NewRequest("GET", "/repos/julienschmidt/httprouter/stargazers", nil)
 // 	benchRequest(b, githubMacaron, req)

@@ -262,7 +262,7 @@ func init() {
 	calcMem("LARS", func() {
 		staticLARS = loadLARS(staticRoutes)
 	})
-	calcMem("LARS", func() {
+	calcMem("Pure", func() {
 		staticPure = loadPure(staticRoutes)
 	})
 	// calcMem("Macaron", func() {

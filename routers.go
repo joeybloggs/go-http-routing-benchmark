@@ -1060,7 +1060,7 @@ func pureNativeHandlerTest(w http.ResponseWriter, r *http.Request) {
 }
 
 func loadPure(routes []route) http.Handler {
-	var h interface{} = pureHandler
+	var h http.HandlerFunc = pureHandler
 	if loadTestHandler {
 		h = pureHandlerTest
 	}

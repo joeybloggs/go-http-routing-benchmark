@@ -294,6 +294,7 @@ var (
 	githubMartini     http.Handler
 	githubPat         http.Handler
 	githubPossum      http.Handler
+	githubPure        http.Handler
 	githubR2router    http.Handler
 	githubRevel       http.Handler
 	githubRivet       http.Handler

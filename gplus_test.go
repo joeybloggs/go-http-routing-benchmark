@@ -56,6 +56,7 @@ var (
 	gplusMartini     http.Handler
 	gplusPat         http.Handler
 	gplusPossum      http.Handler
+	gplusPure        http.Handler
 	gplusR2router    http.Handler
 	gplusRevel       http.Handler
 	gplusRivet       http.Handler

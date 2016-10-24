@@ -76,6 +76,7 @@ var (
 	parseMartini     http.Handler
 	parsePat         http.Handler
 	parsePossum      http.Handler
+	parsePure        http.Handler
 	parseR2router    http.Handler
 	parseRevel       http.Handler
 	parseRivet       http.Handler

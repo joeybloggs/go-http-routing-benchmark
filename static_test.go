@@ -273,6 +273,9 @@ func init() {
 	calcMem("Possum", func() {
 		staticPossum = loadPossum(staticRoutes)
 	})
+	calcMem("Pure", func() {
+		staticPure = loadPure(staticRoutes)
+	})
 	calcMem("R2router", func() {
 		staticR2router = loadR2router(staticRoutes)
 	})
@@ -365,6 +368,9 @@ func BenchmarkPat_StaticAll(b *testing.B) {
 }
 func BenchmarkPossum_StaticAll(b *testing.B) {
 	benchRoutes(b, staticPossum, staticRoutes)
+}
+func BenchmarkPure_StaticAll(b *testing.B) {
+	benchRoutes(b, staticPure, staticRoutes)
 }
 func BenchmarkR2router_StaticAll(b *testing.B) {
 	benchRoutes(b, staticR2router, staticRoutes)

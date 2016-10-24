@@ -23,6 +23,7 @@ import (
 	"github.com/astaxie/beego/context"
 	"github.com/bmizerany/pat"
 	"github.com/go-playground/lars"
+	"github.com/go-playground/pure"
 	// "github.com/daryl/zeus"
 	"github.com/dimfeld/httptreemux"
 	"github.com/emicklei/go-restful"
@@ -1040,6 +1041,70 @@ func loadPossumSingle(method, path string, handler possum.HandlerFunc) http.Hand
 	router := possum.NewServerMux()
 	router.HandleFunc(possumrouter.Simple(path), handler, possumview.Simple("text/html", "utf-8"))
 	return router
+}
+
+// pure
+func pureHandler(w http.ResponseWriter, r *http.Request) {
+}
+
+func pureHandlerWrite(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, pure.RequestVars(r).URLParam("name"))
+}
+
+func pureHandlerTest(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, r.RequestURI)
+}
+
+func pureNativeHandlerTest(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, r.RequestURI)
+}
+
+func loadPure(routes []route) http.Handler {
+	var h interface{} = pureHandler
+	if loadTestHandler {
+		h = pureHandlerTest
+	}
+
+	p := pure.New()
+
+	for _, r := range routes {
+		switch r.method {
+		case "GET":
+			p.Get(r.path, h)
+		case "POST":
+			p.Post(r.path, h)
+		case "PUT":
+			p.Put(r.path, h)
+		case "PATCH":
+			p.Patch(r.path, h)
+		case "DELETE":
+			p.Delete(r.path, h)
+		default:
+			panic("Unknow HTTP method: " + r.method)
+		}
+	}
+	return p.Serve()
+}
+
+func loadPureSingle(method, path string, h http.HandlerFunc) http.Handler {
+
+	p := pure.New()
+
+	switch method {
+	case "GET":
+		p.Get(path, h)
+	case "POST":
+		p.Post(path, h)
+	case "PUT":
+		p.Put(path, h)
+	case "PATCH":
+		p.Patch(path, h)
+	case "DELETE":
+		p.Delete(path, h)
+	default:
+		panic("Unknow HTTP method: " + method)
+	}
+	return p.Serve()
 }
 
 // R2router

@@ -367,6 +367,9 @@ func init() {
 	calcMem("Possum", func() {
 		githubPossum = loadPossum(githubAPI)
 	})
+	calcMem("Pure", func() {
+		githubPure = loadPure(githubAPI)
+	})
 	calcMem("R2router", func() {
 		githubR2router = loadR2router(githubAPI)
 	})
@@ -475,6 +478,10 @@ func BenchmarkPat_GithubStatic(b *testing.B) {
 func BenchmarkPossum_GithubStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/user/repos", nil)
 	benchRequest(b, githubPossum, req)
+}
+func BenchmarkPure_GithubStatic(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/user/repos", nil)
+	benchRequest(b, githubPure, req)
 }
 func BenchmarkR2router_GithubStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/user/repos", nil)
@@ -591,6 +598,10 @@ func BenchmarkPossum_GithubParam(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/repos/julienschmidt/httprouter/stargazers", nil)
 	benchRequest(b, githubPossum, req)
 }
+func BenchmarkPureGithubParam(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/repos/julienschmidt/httprouter/stargazers", nil)
+	benchRequest(b, githubPure, req)
+}
 func BenchmarkR2router_GithubParam(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/repos/julienschmidt/httprouter/stargazers", nil)
 	benchRequest(b, githubR2router, req)
@@ -685,6 +696,9 @@ func BenchmarkPat_GithubAll(b *testing.B) {
 }
 func BenchmarkPossum_GithubAll(b *testing.B) {
 	benchRoutes(b, githubPossum, githubAPI)
+}
+func BenchmarkPure_GithubAll(b *testing.B) {
+	benchRoutes(b, githubPure, githubAPI)
 }
 func BenchmarkR2router_GithubAll(b *testing.B) {
 	benchRoutes(b, githubR2router, githubAPI)

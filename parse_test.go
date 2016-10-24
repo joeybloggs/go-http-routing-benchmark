@@ -149,6 +149,9 @@ func init() {
 	calcMem("Possum", func() {
 		parsePossum = loadPossum(parseAPI)
 	})
+	calcMem("Pure", func() {
+		parsePure = loadPure(parseAPI)
+	})
 	calcMem("R2router", func() {
 		parseR2router = loadR2router(parseAPI)
 	})
@@ -257,6 +260,10 @@ func BenchmarkPat_ParseStatic(b *testing.B) {
 func BenchmarkPossum_ParseStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/1/users", nil)
 	benchRequest(b, parsePossum, req)
+}
+func BenchmarkPure_ParseStatic(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/1/users", nil)
+	benchRequest(b, parsePure, req)
 }
 func BenchmarkR2router_ParseStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/1/users", nil)
@@ -373,6 +380,10 @@ func BenchmarkPossum_ParseParam(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/1/classes/go", nil)
 	benchRequest(b, parsePossum, req)
 }
+func BenchmarkPure_ParseParam(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/1/classes/go", nil)
+	benchRequest(b, parsePure, req)
+}
 func BenchmarkR2router_ParseParam(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/1/classes/go", nil)
 	benchRequest(b, parseR2router, req)
@@ -488,6 +499,10 @@ func BenchmarkPossum_Parse2Params(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/1/classes/go/123456789", nil)
 	benchRequest(b, parsePossum, req)
 }
+func BenchmarkPure_Parse2Params(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/1/classes/go/123456789", nil)
+	benchRequest(b, parsePure, req)
+}
 func BenchmarkR2router_Parse2Params(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/1/classes/go/123456789", nil)
 	benchRequest(b, parseR2router, req)
@@ -582,6 +597,9 @@ func BenchmarkPat_ParseAll(b *testing.B) {
 }
 func BenchmarkPossum_ParseAll(b *testing.B) {
 	benchRoutes(b, parsePossum, parseAPI)
+}
+func BenchmarkPure_ParseAll(b *testing.B) {
+	benchRoutes(b, parsePure, parseAPI)
 }
 func BenchmarkR2router_ParseAll(b *testing.B) {
 	benchRoutes(b, parseR2router, parseAPI)

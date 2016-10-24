@@ -129,6 +129,9 @@ func init() {
 	calcMem("Possum", func() {
 		gplusPossum = loadPossum(gplusAPI)
 	})
+	calcMem("Pure", func() {
+		gplusPure = loadPure(gplusAPI)
+	})
 	calcMem("R2router", func() {
 		gplusR2router = loadR2router(gplusAPI)
 	})
@@ -237,6 +240,10 @@ func BenchmarkPat_GPlusStatic(b *testing.B) {
 func BenchmarkPossum_GPlusStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people", nil)
 	benchRequest(b, gplusPossum, req)
+}
+func BenchmarkPure_GPlusStatic(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/people", nil)
+	benchRequest(b, gplusPure, req)
 }
 func BenchmarkR2router_GPlusStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people", nil)
@@ -353,6 +360,10 @@ func BenchmarkPossum_GPlusParam(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people/118051310819094153327", nil)
 	benchRequest(b, gplusPossum, req)
 }
+func BenchmarkPure_GPlusParam(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/people/118051310819094153327", nil)
+	benchRequest(b, gplusPure, req)
+}
 func BenchmarkR2router_GPlusParam(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people/118051310819094153327", nil)
 	benchRequest(b, gplusR2router, req)
@@ -468,6 +479,10 @@ func BenchmarkPossum_GPlus2Params(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people/118051310819094153327/activities/123456789", nil)
 	benchRequest(b, gplusPossum, req)
 }
+func BenchmarkPure_GPlus2Params(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/people/118051310819094153327/activities/123456789", nil)
+	benchRequest(b, gplusPure, req)
+}
 func BenchmarkR2router_GPlus2Params(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people/118051310819094153327/activities/123456789", nil)
 	benchRequest(b, gplusR2router, req)
@@ -562,6 +577,9 @@ func BenchmarkPat_GPlusAll(b *testing.B) {
 }
 func BenchmarkPossum_GPlusAll(b *testing.B) {
 	benchRoutes(b, gplusPossum, gplusAPI)
+}
+func BenchmarkPure_GPlusAll(b *testing.B) {
+	benchRoutes(b, gplusPure, gplusAPI)
 }
 func BenchmarkR2router_GPlusAll(b *testing.B) {
 	benchRoutes(b, gplusR2router, gplusAPI)

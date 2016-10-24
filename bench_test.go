@@ -215,6 +215,13 @@ func BenchmarkPat_Param(b *testing.B) {
 	benchRequest(b, router, r)
 }
 
+func BenchmarkPure_Param(b *testing.B) {
+	router := loadPureSingle("GET", "/user/:name", pureHandler)
+
+	r, _ := http.NewRequest("GET", "/user/gordon", nil)
+	benchRequest(b, router, r)
+}
+
 func BenchmarkPossum_Param(b *testing.B) {
 	router := loadPossumSingle("GET", "/user/:name", possumHandler)
 
@@ -401,6 +408,12 @@ func BenchmarkPossum_Param5(b *testing.B) {
 	r, _ := http.NewRequest("GET", fiveRoute, nil)
 	benchRequest(b, router, r)
 }
+func BenchmarkPure_Param5(b *testing.B) {
+	router := loadPureSingle("GET", fiveColon, pureHandler)
+
+	r, _ := http.NewRequest("GET", fiveRoute, nil)
+	benchRequest(b, router, r)
+}
 func BenchmarkR2router_Param5(b *testing.B) {
 	router := loadR2routerSingle("GET", fiveColon, r2routerHandler)
 
@@ -581,6 +594,12 @@ func BenchmarkPossum_Param20(b *testing.B) {
 	r, _ := http.NewRequest("GET", twentyRoute, nil)
 	benchRequest(b, router, r)
 }
+func BenchmarkPure_Param20(b *testing.B) {
+	router := loadPureSingle("GET", twentyColon, pureHandler)
+
+	r, _ := http.NewRequest("GET", twentyRoute, nil)
+	benchRequest(b, router, r)
+}
 func BenchmarkR2router_Param20(b *testing.B) {
 	router := loadR2routerSingle("GET", twentyColon, r2routerHandler)
 
@@ -753,6 +772,12 @@ func BenchmarkPat_ParamWrite(b *testing.B) {
 }
 func BenchmarkPossum_ParamWrite(b *testing.B) {
 	router := loadPossumSingle("GET", "/user/:name", possumHandlerWrite)
+
+	r, _ := http.NewRequest("GET", "/user/gordon", nil)
+	benchRequest(b, router, r)
+}
+func BenchmarkPure_ParamWrite(b *testing.B) {
+	router := loadPureSingle("GET", "/user/:name", pureHandlerWrite)
 
 	r, _ := http.NewRequest("GET", "/user/gordon", nil)
 	benchRequest(b, router, r)
